@@ -1,0 +1,5 @@
+- if @advertisement.ad_type == 'ad_service'
+  = @advertisement.ad_text.html_safe
+- if @advertisement.ad_type == 'image_link'
+  %a{:href => @advertisement.url}
+    = image_tag @advertisement.image_url, :size => "#{@advertisement.width}x#{@advertisement.height}"

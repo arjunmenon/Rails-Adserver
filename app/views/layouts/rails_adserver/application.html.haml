@@ -1,0 +1,25 @@
+!!! 5
+%html
+  %head
+    %title= "Adserver | #{@title}"
+    = stylesheet_link_tag    "rails_adserver/application", :media => "all"
+    = javascript_include_tag "rails_adserver/application"
+    = csrf_meta_tags
+    :css
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+  %body
+    = render 'layouts/rails_adserver/topbar'
+    .container-fluid
+      .row-fluid
+        = render 'layouts/rails_adserver/sidebar'
+        .span9
+          = yield
+
+  %footer
+    %p © Rails Adserver 2012

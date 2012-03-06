@@ -1,0 +1,19 @@
+%h1= @title
+%table.table.table-striped
+  %tr
+    %th Id
+    %th Name
+    %th Location
+    %th
+    %th
+    %th
+  - @adspaces.each do |adspace|
+    %tr
+      %td= adspace.id
+      %td= adspace.name
+      %td 
+      %td= link_to 'Show', adspace
+      %td= link_to 'Edit', edit_adspace_path(adspace)
+      %td= link_to 'Destroy', adspace, confirm: 'Are you sure?', method: :delete
+%br/
+= link_to 'New Adspace', new_adspace_path

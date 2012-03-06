@@ -1,0 +1,94 @@
+= form_for(@advertisement, :html => {:class => 'form-horizontal', :multipart => true}) do |f|
+  - if @advertisement.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@advertisement.errors.count, "error")
+        prohibited this advertisement from being saved:
+      %ul
+        - @advertisement.errors.full_messages.each do |msg|
+          %li= msg
+  %legend= @title
+  .control-group
+    = f.label :title, :class => "control-label"
+    .controls
+      = f.text_field :title
+  .control-group
+    = f.label :adspace, :class => "control-label"
+    .controls
+      = f.collection_select :adspace_id, RailsAdserver::Adspace.all, :id, :name, :prompt => true
+  .control-group
+    = f.label :ad_type, :class => "control-label"
+    .controls
+      %label.radio
+        = f.radio_button(:ad_type, "ad_service")
+        Ad-Service Advertisement
+      %label.radio
+        = f.radio_button(:ad_type, "image_link")
+        Image Link
+  .control-group
+    = f.label :ad_text, :class => "control-label", :id => "ad_text"
+    .controls
+      = f.text_area :ad_text, :rows => "5"
+  .control-group
+    = f.label :ad_image, :class => 'control-label', :id => 'image'
+    .controls
+      = f.file_field :image, :class => "input-file"
+  .control-group
+    = f.label :width, :class => "control-label", :id => "width"
+    .controls
+      = f.number_field :width
+  .control-group
+    = f.label :height, :class => "control-label", :id => "height"
+    .controls
+      = f.number_field :height
+  .control-group
+    = f.label :url, :class => "control-label", :id => "url"
+    .controls
+      = f.text_field :url
+  .control-group
+    = f.label :max_clicks, :class => "control-label", :id => "clicks"
+    .controls
+      = f.number_field :max_clicks
+      %p.help-block Use 0 for infinite clicks.
+  .control-group
+    = f.label "Parameter Restriction?", :class => "control-label"
+    .controls
+      %label.radio
+        = f.radio_button(:parameter_restriction_boolean, false)
+        False
+      %label.radio
+        = f.radio_button(:parameter_restriction_boolean, true)
+        True
+  .control-group
+    = f.label :param_restriction_name, :class => "control-label", :id => "param_name"
+    .controls
+      %select{:id => "advertisement_param_restriction_name", :name => "advertisement[param_restriction_name]"}
+        - ActiveRecord::Base.descendants.each do |model|
+          - unless model.name == "RailsAdserver::Advertisement" or model.name == "RailsAdserver::Adspace"
+            %optgroup{:label => "#{model.name}"}
+            - model.column_names.each do |name|
+              %option{:value => "#{name}"}= name
+      %p.help-block Optional, Name for Reference
+  .control-group
+    = f.label :param_restriction, :class => "control-label", :id => "param_restriction_value"
+    .controls
+      = f.text_field :param_restriction
+  .control-group
+    = f.label :geolocation?, :class => "control-label", :id => "geo"
+    .controls
+      %label.radio
+        = f.radio_button(:geolocation_boolean, false)
+        False
+      %label.radio
+        = f.radio_button(:geolocation_boolean, true)
+        True
+  .control-group
+    = f.label :geolocation_location, :class => "control-label", :id => "geo_location"
+    .controls
+      = f.text_field :geolocation_location
+  .control-group
+    = f.label :active, :class => "control-label"
+    .controls
+      = f.check_box :is_active
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary"
