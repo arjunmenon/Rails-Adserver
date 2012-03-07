@@ -1,6 +1,9 @@
 require 'carrierwave'
 module RailsAdserver
   class AdvertisementsController < ApplicationController
+    
+    before_filter :authenticate, :execpt => [:ad]
+    
     def ad
       space = RailsAdserver::Adspace.find(params[:adspace_id])
       if params[:id] != nil
@@ -127,6 +130,13 @@ module RailsAdserver
       respond_to do |format|
         format.html { redirect_to advertisements_url }
         format.json { head :no_content }
+      end
+    end
+    
+    private
+    def authenticate
+      unless _current_user.can_manage_ads
+        redirect_to '/500.html'
       end
     end
   end

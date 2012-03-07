@@ -1,5 +1,7 @@
 module RailsAdserver
   class AdspacesController < ApplicationController
+    before_filter :authenticate
+    
     # GET /adspaces
     # GET /adspaces.json
     def index
@@ -80,6 +82,13 @@ module RailsAdserver
       respond_to do |format|
         format.html { redirect_to adspaces_url }
         format.json { head :no_content }
+      end
+    end
+    
+    private
+    def authenticate
+      unless _current_user.can_manage_ads
+        redirect_to '/500.html'
       end
     end
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120306065447) do
+ActiveRecord::Schema.define(:version => 20120307204255) do
 
   create_table "rails_adserver_adspaces", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(:version => 20120306065447) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.boolean  "can_manage_ads"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
