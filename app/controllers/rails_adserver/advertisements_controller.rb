@@ -1,6 +1,45 @@
 require 'carrierwave'
 module RailsAdserver
   class AdvertisementsController < ApplicationController
+    def ad
+      space = RailsAdserver::Adspace.find(params[:adspace_id])
+      if params[:id] != nil
+        id = space.advertisements.random_ad(params[:id])
+      else
+        id = nil
+      end
+      
+      if id != nil
+        @advertisement = RailsAdserver::Advertisement.find(id)  
+      else 
+        geo_ip = Geokit::Geocoders::MultiGeocoder.geocode(request.remote_ip)
+        geo =  Geokit::Geocoders::MultiGeocoder.geocode("#{geo_ip.city},#{geo_ip.state},#{geo_ip.country}")
+        id =  RailsAdserver::Advertisement.geo_city(geo.city)
+        if id
+          @advertisement = RailsAdserver::Advertisement.find(id)
+        else
+          id = space.advertisements.geo_state(geo.state)
+          if id
+            @advertisement = RailsAdserver::Advertisement.find(id)
+          else
+            id = space.advertisements.geo_country(geo.country)
+            if id
+              @advertisement = RailsAdserver::Advertisement.find(id)
+            else
+              id = space.advertisements.random_ad(nil)
+              unless id == nil
+                @advertisement = RailsAdserver::Advertisement.find(id)
+              end
+            end
+          end
+        end
+      end
+      
+      respond_to do |format|
+        format.html {render :layout => false}
+      end
+    end
+     
     def click
       client_ip = request.remote_ip
       ad = Advertisement.find(params[:id])
