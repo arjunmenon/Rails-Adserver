@@ -1,7 +1,7 @@
 module RailsAdserver
   class PagesController < ApplicationController
-    before_filter :authenticate
     helper_method :_current_user
+    before_filter :authenticate
     def home
       @title = "Overview"
     end
