@@ -1,7 +1,7 @@
 module RailsAdserver
   class AdspacesController < ApplicationController
     before_filter :authenticate
-    
+    helper_method :_current_user
     # GET /adspaces
     # GET /adspaces.json
     def index
