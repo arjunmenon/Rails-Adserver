@@ -4,7 +4,6 @@ PATH
     rails_adserver (1.0.0)
       carrierwave
       coffee-script
-      devise
       geokit
       haml
       rails (~> 3.2.1)
@@ -117,6 +116,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  devise
   jquery-rails
   rails_adserver!
   sqlite3

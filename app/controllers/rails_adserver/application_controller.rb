@@ -13,8 +13,12 @@ module RailsAdserver
       instance_eval &RailsAdserver::Config.current_user_method
     end
     def _authenticate
-      unless _current_user.can_manage_ads
-        redirect_to '/500.html'
+      if _current_user == nil
+        redirect_to '/404.html'
+      else
+        unless _current_user.can_manage_ads
+          redirect_to '/404.html'
+        end
       end
     end
   end

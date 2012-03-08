@@ -3,7 +3,6 @@
   %tr
     %th Id
     %th Name
-    %th Location
     %th
     %th
     %th
@@ -11,7 +10,6 @@
     %tr
       %td= adspace.id
       %td= adspace.name
-      %td 
       %td= link_to 'Show', adspace
       %td= link_to 'Edit', edit_adspace_path(adspace)
       %td= link_to 'Destroy', adspace, confirm: 'Are you sure?', method: :delete

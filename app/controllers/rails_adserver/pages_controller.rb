@@ -3,6 +3,7 @@ module RailsAdserver
     before_filter :_authenticate
     def home
       @title = "Overview"
+      @adspaces = RailsAdserver::Adspace.find(:all)
     end
   end
 end

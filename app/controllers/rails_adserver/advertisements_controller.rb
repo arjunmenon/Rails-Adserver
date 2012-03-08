@@ -85,6 +85,7 @@ module RailsAdserver
   
     # GET /advertisements/1/edit
     def edit
+      @title = "Edit Advertisement"
       @advertisement = Advertisement.find(params[:id])
     end
   

@@ -5,15 +5,11 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      %a.brand{:href => "#"}= "#{_application_name} Adserver"
+      %a.brand{:href => root_path}= "#{_application_name} Adserver"
       .nav-collapse
         %ul.nav
           %li
             %a{:href => "/"} Application
-          %li
-            %a{:href => "#about"} About
-          %li
-            %a{:href => "#contact"} Contact
         %p.navbar-text.pull-right
           Logged in as
           %a{:href => "#"}= "#{_current_user.email}"

@@ -1,0 +1,34 @@
+%table.table.table-striped
+  %tr
+    %th Title
+    %th Active?
+    %th Max Clicks
+    %th Clicks
+    %th Geolocation
+    %th Restriction
+    %th
+    %th
+    %th
+  - @advertisements.each do |advertisement|
+    %tr
+      %td= advertisement.title
+      %td= advertisement.is_active
+      %td= advertisement.max_clicks
+      %td
+        - if advertisement.clicks == []
+          None
+        -else
+          = advertisement.clicks
+      %td
+        - if advertisement.geolocation_location == []
+          None
+        - else
+          = advertisement.geolocation_location
+      %td
+        - if advertisement.param_restriction == []
+          None
+        - else
+          = advertisement.param_restriction
+      %td= link_to 'Show', advertisement
+      %td= link_to 'Edit', edit_advertisement_path(advertisement)
+      %td= link_to 'Destroy', advertisement, confirm: 'Are you sure?', method: :delete

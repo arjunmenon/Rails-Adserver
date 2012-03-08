@@ -1,1 +1,9 @@
-%h1 Adserver
+- @adspaces.each do |space|
+  %h1= "#{space.name} Active Ads:"
+  - @advertisements = space.advertisements.where('is_active = ?',true)
+  - unless @advertisements == []
+    = render 'rails_adserver/advertisements/advertisements_table', :locals => { :object => @advertisements }
+  - else
+    No Active Ads
+  %br/
+  %br/

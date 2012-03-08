@@ -27,7 +27,13 @@ RailsAdserver.config do |config|
 end
 ```
 
-add a migration to the user:
+To use fog add this line to your rails_adserver initializer file
+
+```ruby
+config.carrierwave_method = "File"
+```
+
+Add the can_mange_ads column for users, true allows access to the adserver.
 
 ```ruby
 rails g migration add_management_of_ads_to_users can_manage_ads:boolean

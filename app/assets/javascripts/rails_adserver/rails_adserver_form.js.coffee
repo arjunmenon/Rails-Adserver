@@ -7,6 +7,7 @@ jQuery ->
   $('#param_restriction_value').parent().hide()
   $('#image').parent().hide()
   $('#clicks').parent().hide()
+  $('#geo_location').parent().hide()
   if($('#advertisement_ad_type_image_link').attr('checked'))
     $('#width').parent().show()
     $('#height').parent().show()
@@ -18,7 +19,8 @@ jQuery ->
   if($('#advertisement_parameter_restriction_boolean_true').attr('checked'))
     $('#param_name').parent().show()
     $('#param_restriction_value').parent().show()
-
+  if($('#advertisement_geolocation_boolean_true').attr('checked'))
+    $('#geo_location').parent().show()
   $('#advertisement_ad_type_ad_service').change ->
     $('#width').parent().hide()
     $('#height').parent().hide()
@@ -39,3 +41,7 @@ jQuery ->
   $('#advertisement_parameter_restriction_boolean_false').change ->
     $('#param_name').parent().hide()
     $('#param_restriction_value').parent().hide()
+  $('#advertisement_geolocation_boolean_true').change ->
+    $('#geo_location').parent().show()
+  $('#advertisement_geolocation_boolean_false').change ->
+    $('#geo_location').parent().hide()
