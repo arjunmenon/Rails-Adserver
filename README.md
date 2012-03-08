@@ -1,4 +1,4 @@
-= RailsAdserver
+RailsAdserver
 
 ```ruby
 rails new Adserver_App
@@ -9,6 +9,7 @@ mount RailsAdserver::Engine => "/rails_adserver"
 
 Initializer File:
 You need to give rails_adserver access to the user model and name of the application.
+
 ```ruby
 RailsAdserver.config do |config|
   config.current_user_method { current_user }
@@ -17,11 +18,13 @@ end
 ```
 
 add a migration to the user
+
 ```ruby
 rails g migration add_management_of_ads_to_users can_manage_ads:boolean
 ```
 
 Carrierwave Initializer File Without Fog
+
 '''ruby
 require 'carrierwave'
 CarrierWave.configure do |config|
@@ -30,6 +33,7 @@ end
 ```
 
 Carrierwave Initializer File With Fog
+
 ```ruby
 require 'carrierwave'
 CarrierWave.configure do |config|
