@@ -3,6 +3,7 @@
   They will automatically be included in application.css.
 */
 footer{
+  padding: 40px 0 0 0;
 	text-align:center;
 }
 

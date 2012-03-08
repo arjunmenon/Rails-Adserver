@@ -7,10 +7,19 @@ module RailsAdserver
     attr_accessible :image, :title, :content, :width, :height, :is_active, :param_restriction, :ad_text, :parameter_restriction_boolean,
     :param_restriction_name, :adspace_id, :ad_type, :url, :geolocation_boolean, :max_clicks, :geolocation_location, :city_name, :state_name, :country_name
     
+    validates :title, :presence => true
+    validates :width, :numericality => true
+    validates :height, :numericality => true
+    validates :max_clicks, :numericality => true
+    validates :is_active, :presence => true
+    validates :parameter_restriction_boolean, :presence => true
+    validates :geolocation_boolean, :presence => true
+    validates :adspace_id, :presence => true
+    
     mount_uploader :image, AdvertisementUploader
     def self.random_ad(param)
       if param == nil
-        ad_ids = self.where("is_active = ? AND parameter_restriction_boolean = ?", true, false).map(&:id)
+        ad_ids = self.where("is_active = ? AND parameter_restriction_boolean = ? AND geolocation_boolean = ?", true, false, false).map(&:id)
       else
         ad_ids = self.where("is_active = ? AND param_restriction = ?",true, param).map(&:id)
       end
@@ -21,7 +30,7 @@ module RailsAdserver
       id = ad_ids[rand(ad_ids.length)]
     end
     def self.geo_state(state)
-      ad_ids = self.where("state_name = ? AND is_active = ?", state, true).map(&:id)
+      ad_ids = self.where("state_name = ? AND city_name = ? AND is_active = ?", state, nil,  true).map(&:id)
       id = ad_ids[rand(ad_ids.length)]
     end
     def self.geo_country(country)

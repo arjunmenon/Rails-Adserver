@@ -11,11 +11,11 @@ module RailsAdserver
       end
       
       if id != nil
-        @advertisement = RailsAdserver::Advertisement.find(id)  
+        @advertisement = RailsAdserver::Advertisement.find(id)
       else 
         geo_ip = Geokit::Geocoders::MultiGeocoder.geocode(request.remote_ip)
         geo =  Geokit::Geocoders::MultiGeocoder.geocode("#{geo_ip.city},#{geo_ip.state},#{geo_ip.country}")
-        id =  RailsAdserver::Advertisement.geo_city(geo.city)
+        id =  space.advertisements.geo_city(geo.city)
         if id
           @advertisement = RailsAdserver::Advertisement.find(id)
         else
