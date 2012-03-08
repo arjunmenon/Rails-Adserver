@@ -8,12 +8,6 @@ module RailsAdserver
     :param_restriction_name, :adspace_id, :ad_type, :url, :geolocation_boolean, :max_clicks, :geolocation_location, :city_name, :state_name, :country_name
     
     validates :title, :presence => true
-    validates :width, :numericality => true
-    validates :height, :numericality => true
-    validates :max_clicks, :numericality => true
-    validates :is_active, :presence => true
-    validates :parameter_restriction_boolean, :presence => true
-    validates :geolocation_boolean, :presence => true
     validates :adspace_id, :presence => true
     
     mount_uploader :image, AdvertisementUploader
@@ -34,7 +28,7 @@ module RailsAdserver
       id = ad_ids[rand(ad_ids.length)]
     end
     def self.geo_country(country)
-      ad_ids = self.where("country_name = ? AND is_active = ?", country, true).map(&:id)
+      ad_ids = self.where("country_name = ? AND state_name = ? AND city_name = ? AND is_active = ?", country, nil, nil, true).map(&:id)
       id = ad_ids[rand(ad_ids.length)]
     end
   end
