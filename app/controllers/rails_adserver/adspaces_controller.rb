@@ -84,12 +84,5 @@ module RailsAdserver
         format.json { head :no_content }
       end
     end
-    
-    private
-    def authenticate
-      unless _current_user.can_manage_ads
-        redirect_to '/500.html'
-      end
-    end
   end
 end
