@@ -2,8 +2,18 @@ RailsAdserver
 
 ```ruby
 rails new Adserver_App
-gem 'rails_adserver'
 rake rails_adserver:install:migrations
+```
+
+Gemfile
+
+```ruby
+gem 'rails_adserver'
+```
+
+Routes
+
+```ruby
 mount RailsAdserver::Engine => "/rails_adserver"
 ```
 
