@@ -1,9 +1,7 @@
-require 'carrierwave'
 module RailsAdserver
-  class AdvertisementsController < ApplicationController
-    
-    helper_method :_current_user
-    before_filter :authenticate, :execpt => [:ad]
+  class AdvertisementsController < RailsAdserver::ApplicationController
+    before_filter :_authenticate
+    require 'carrierwave'
     def ad
       space = RailsAdserver::Adspace.find(params[:adspace_id])
       if params[:id] != nil
@@ -132,5 +130,6 @@ module RailsAdserver
         format.json { head :no_content }
       end
     end
+    
   end
 end

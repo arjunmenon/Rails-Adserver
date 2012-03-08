@@ -1,8 +1,7 @@
 module RailsAdserver
   class ApplicationController < ActionController::Base
-    helper_method :_current_user
-    helper_method :_application_name
-    helper_method :_model_pool
+    helper :all
+    helper_method :_current_user, :_application_name, :_model_pool
     private
     def _model_pool
       RailsAdserver::Config.models_pool
@@ -13,7 +12,7 @@ module RailsAdserver
     def _current_user
       instance_eval &RailsAdserver::Config.current_user_method
     end
-    def authenticate
+    def _authenticate
       unless _current_user.can_manage_ads
         redirect_to '/500.html'
       end
