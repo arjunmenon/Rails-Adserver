@@ -1,17 +1,17 @@
-RailsAdserver
+Setup:
 
 ```ruby
 rails new Adserver_App
 rake rails_adserver:install:migrations
 ```
 
-Gemfile
+Gemfile:
 
 ```ruby
 gem 'rails_adserver'
 ```
 
-Routes
+Routes:
 
 ```ruby
 mount RailsAdserver::Engine => "/rails_adserver"
@@ -27,22 +27,22 @@ RailsAdserver.config do |config|
 end
 ```
 
-add a migration to the user
+add a migration to the user:
 
 ```ruby
 rails g migration add_management_of_ads_to_users can_manage_ads:boolean
 ```
 
-Carrierwave Initializer File Without Fog
+Carrierwave Initializer File Without Fog:
 
-'''ruby
+```ruby
 require 'carrierwave'
 CarrierWave.configure do |config|
   config.root = "#{Dir.pwd}/public/"
 end
 ```
 
-Carrierwave Initializer File With Fog
+Carrierwave Initializer File With Fog:
 
 ```ruby
 require 'carrierwave'
