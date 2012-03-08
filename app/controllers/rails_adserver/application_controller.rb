@@ -1,5 +1,5 @@
 module RailsAdserver
-  class ApplicationController < ActionController::Base
+  class ApplicationController < ActionController
     helper_method :_current_user
     helper_method :_application_name
     helper_method :_model_pool
