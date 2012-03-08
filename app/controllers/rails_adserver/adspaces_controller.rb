@@ -47,7 +47,7 @@ module RailsAdserver
       @adspace = Adspace.new(params[:adspace])
       respond_to do |format|
         if @adspace.save
-          format.html { redirect_to @adspace, notice: 'Adspace was successfully created.' }
+          format.html { redirect_to '/adspaces', notice: 'Adspace was successfully created.' }
           format.json { render json: @adspace, status: :created, location: @adspace }
         else
           format.html { render action: "new" }
