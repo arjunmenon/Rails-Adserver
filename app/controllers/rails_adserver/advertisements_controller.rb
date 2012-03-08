@@ -1,6 +1,6 @@
 module RailsAdserver
   class AdvertisementsController < RailsAdserver::ApplicationController
-    before_filter :_authenticate
+    before_filter :_authenticate, :except => [:ad]
     require 'carrierwave'
     def ad
       space = RailsAdserver::Adspace.find(params[:adspace_id])
