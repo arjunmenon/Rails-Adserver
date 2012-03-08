@@ -14,7 +14,7 @@ gem 'rails_adserver'
 Routes:
 
 ```ruby
-mount RailsAdserver::Engine => "/rails_adserver"
+mount RailsAdserver::Engine => "/"
 ```
 
 Initializer File:
