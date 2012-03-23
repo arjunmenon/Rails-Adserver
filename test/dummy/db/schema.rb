@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120307204255) do
+ActiveRecord::Schema.define(:version => 20120323174313) do
 
   create_table "rails_adserver_adspaces", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20120307204255) do
     t.string   "city_name"
     t.string   "state_name"
     t.string   "country_name"
+    t.boolean  "backup"
   end
 
   add_index "rails_adserver_advertisements", ["adspace_id"], :name => "index_rails_adserver_advertisements_on_adspace_id"

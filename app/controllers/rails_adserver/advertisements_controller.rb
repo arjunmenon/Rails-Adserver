@@ -1,8 +1,8 @@
 module RailsAdserver
   class AdvertisementsController < RailsAdserver::ApplicationController
-    before_filter :_authenticate, :except => [:ad]
+    before_filter :_authenticate, :except => [:ad_param, :ad_space]
     require 'carrierwave'
-    def ad
+    def ad_param
       space = RailsAdserver::Adspace.find(params[:adspace_id])
       if params[:id] != nil
         id = space.advertisements.random_ad(params[:id])
@@ -30,9 +30,31 @@ module RailsAdserver
               id = space.advertisements.random_ad(nil)
               unless id == nil
                 @advertisement = RailsAdserver::Advertisement.find(id)
+              else
+                id = space.advertisements.backup_ad
+                unless id == nil
+                  @advertisement = RailsAdserver::Advertisement.find(id)
+                end
               end
             end
           end
+        end
+      end
+      
+      respond_to do |format|
+        format.html {render :layout => false}
+      end
+    end
+    
+    def ad_space
+      space = RailsAdserver::Adspace.find(params[:adspace_id])
+      id = space.advertisements.random_ad(nil)
+      unless id == nil
+        @advertisement = RailsAdserver::Advertisement.find(id)
+      else
+        id = space.advertisements.backup_ad
+        unless id == nil
+          @advertisement = RailsAdserver::Advertisement.find(id)
         end
       end
       
