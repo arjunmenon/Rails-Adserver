@@ -12,6 +12,76 @@ module RailsAdserver
     validates :adspace_id, :presence => true
     
     mount_uploader :image, AdvertisementUploader
+    
+    def self.ad_with_parameter(adspace_id,param,ip)
+      space = RailsAdserver::Adspace.find(adspace_id)
+      id = space.advertisements.random_ad(param)
+      if id == nil
+        geo_ip = Geokit::Geocoders::MultiGeocoder.geocode(ip)
+        geo =  Geokit::Geocoders::MultiGeocoder.geocode("#{geo_ip.city},#{geo_ip.state},#{geo_ip.country}")
+        id =  space.advertisements.geo_city(geo.city)
+        if id == nil
+          id = space.advertisements.geo_state(geo.state)
+          if id == nil
+            id = space.advertisements.geo_country(geo.country)
+            if id == nil
+              id = space.advertisements.random_ad(nil)
+              if id == nil
+                id = space.advertisements.backup_ad
+              end
+            end
+          end
+        end
+      end
+      unless id == nil
+        advertisement = RailsAdserver::Advertisement.find(id)
+        if advertisement.impressions_count == nil
+          advertisement.update_attribute(:impressions_count,0)
+        end
+        count = advertisement.impressions_count+1
+        advertisement.update_attribute(:impressions_count,count)
+        unless advertisement.max_impressions == 0 || advertisement.max_impressions == nil
+          if advertisement.max_impressions <= advertisement.impressions_count
+            advertisement.update_attribute(:is_active,false)
+          end
+        end
+      end
+      return id
+    end
+    
+    def self.ad(adspace_id,ip)
+      space = RailsAdserver::Adspace.find(adspace_id)
+      geo_ip = Geokit::Geocoders::MultiGeocoder.geocode(ip)
+      geo =  Geokit::Geocoders::MultiGeocoder.geocode("#{geo_ip.city},#{geo_ip.state},#{geo_ip.country}")
+      id =  space.advertisements.geo_city(geo.city)
+      if id == nil
+        id = space.advertisements.geo_state(geo.state)
+        if id == nil
+          id = space.advertisements.geo_country(geo.country)
+          if id == nil
+            id = space.advertisements.random_ad(nil)
+            if id == nil
+              id = space.advertisements.backup_ad
+            end
+          end
+        end
+      end
+      unless id == nil
+        advertisement = RailsAdserver::Advertisement.find(id)
+        if advertisement.impressions_count == nil
+          advertisement.update_attribute(:impressions_count,0)
+        end
+        count = advertisement.impressions_count+1
+        advertisement.update_attribute(:impressions_count,count)
+        unless advertisement.max_impressions == 0 || advertisement.max_impressions == nil
+          if advertisement.max_impressions <= advertisement.impressions_count
+            advertisement.update_attribute(:is_active,false)
+          end
+        end
+      end
+      return id
+    end
+    
     def self.random_ad(param)
       if param == nil
         ad_ids = self.where("is_active = ? AND parameter_restriction_boolean = ? AND geolocation_boolean = ? AND backup = ?", true, false, false, false).map(&:id)

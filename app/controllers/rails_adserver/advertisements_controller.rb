@@ -3,85 +3,18 @@ module RailsAdserver
     before_filter :_authenticate, :except => [:ad_param, :ad_space]
     require 'carrierwave'
     def ad_param
-      space = RailsAdserver::Adspace.find(params[:adspace_id])
-      if params[:id] != nil
-        id = space.advertisements.random_ad(params[:id])
-      else
-        id = nil
-      end
-      
-      if id != nil
-        @advertisement = RailsAdserver::Advertisement.find(id)
-      else 
-        geo_ip = Geokit::Geocoders::MultiGeocoder.geocode(request.remote_ip)
-        geo =  Geokit::Geocoders::MultiGeocoder.geocode("#{geo_ip.city},#{geo_ip.state},#{geo_ip.country}")
-        id =  space.advertisements.geo_city(geo.city)
-        if id
-          @advertisement = RailsAdserver::Advertisement.find(id)
-        else
-          id = space.advertisements.geo_state(geo.state)
-          if id
-            @advertisement = RailsAdserver::Advertisement.find(id)
-          else
-            id = space.advertisements.geo_country(geo.country)
-            if id
-              @advertisement = RailsAdserver::Advertisement.find(id)
-            else
-              id = space.advertisements.random_ad(nil)
-              unless id == nil
-                @advertisement = RailsAdserver::Advertisement.find(id)
-              else
-                id = space.advertisements.backup_ad
-                unless id == nil
-                  @advertisement = RailsAdserver::Advertisement.find(id)
-                end
-              end
-            end
-          end
-        end
-      end
-      if @advertisement
-        if @advertisement.impressions_count == nil
-          @advertisement.update_attribute(:impressions_count,0)
-        end
-        count = @advertisement.impressions_count+1
-        @advertisement.update_attribute(:impressions_count,count)
-        unless @advertisement.max_impressions == 0 || @advertisement.max_impressions == nil
-          if @advertisement.max_impressions <= @advertisement.impressions_count
-            @advertisement.update_attribute(:is_active,false)
-          end
-        end
-      end
+      id = RailsAdserver::Advertisement.ad_with_parameter(params[:adspace_id],params[:id],request.remote_ip)
+      @advertisement = RailsAdserver::Advertisement.find(id)
       respond_to do |format|
-        format.html {render :layout => false}
+        format.html {render :partial => 'advertisement', :layout => false}
       end
     end
     
     def ad_space
-      space = RailsAdserver::Adspace.find(params[:adspace_id])
-      id = space.advertisements.random_ad(nil)
-      unless id == nil
-        @advertisement = RailsAdserver::Advertisement.find(id)
-      else
-        id = space.advertisements.backup_ad
-        unless id == nil
-          @advertisement = RailsAdserver::Advertisement.find(id)
-        end
-      end
-      if @advertisement
-        if @advertisement.impressions_count == nil
-          @advertisement.update_attribute(:impressions_count,0)
-        end
-        count = @advertisement.impressions_count+1
-        @advertisement.update_attribute(:impressions_count,count)
-        unless @advertisement.max_impressions == 0 || @advertisement.max_impressions == nil
-          if @advertisement.max_impressions <= @advertisement.impressions_count
-            @advertisement.update_attribute(:is_active,false)
-          end
-        end
-      end
+      id = RailsAdserver::Advertisement.ad(params[:adspace_id],request.remote_ip)
+      @advertisement = RailsAdserver::Advertisement.find(id)
       respond_to do |format|
-        format.html {render :layout => false}
+        format.html {render :partial => 'advertisement', :layout => false}
       end
     end
      
