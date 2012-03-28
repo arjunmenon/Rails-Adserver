@@ -91,15 +91,15 @@ module RailsAdserver
       id = ad_ids[rand(ad_ids.length)]
     end
     def self.geo_city(city)
-      ad_ids = self.where("city_name = ? AND is_active = ?", city, true).map(&:id)
+      ad_ids = self.where("city_name = ? AND is_active = ?  AND geolocation_boolean = ?", city, true,true).map(&:id)
       id = ad_ids[rand(ad_ids.length)]
     end
     def self.geo_state(state)
-      ad_ids = self.where("state_name = ? AND city_name = ? AND is_active = ?", state, nil,  true).map(&:id)
+      ad_ids = self.where("state_name = ? AND city_name = ? AND is_active = ? AND geolocation_boolean = ?", state, nil, true, true).map(&:id)
       id = ad_ids[rand(ad_ids.length)]
     end
     def self.geo_country(country)
-      ad_ids = self.where("country_name = ? AND state_name = ? AND city_name = ? AND is_active = ?", country, nil, nil, true).map(&:id)
+      ad_ids = self.where("country_name = ? AND state_name = ? AND city_name = ? AND is_active = ? AND geolocation_boolean = ?", country, nil, nil, true, true).map(&:id)
       id = ad_ids[rand(ad_ids.length)]
     end
     def self.backup_ad
