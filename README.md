@@ -66,3 +66,11 @@ CarrierWave.configure do |config|
   config.cache_dir = 'carrierwave' # ...two lines
 end
 ```
+
+The Ad will now be rotated at:
+
+```ruby
+  website-url/mounted-root/ad/space/:adpace_id
+  or
+  website-url/mounted-root/ad/space/:adpace_id/param/:param
+```
