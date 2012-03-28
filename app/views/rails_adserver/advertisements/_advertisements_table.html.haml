@@ -4,8 +4,8 @@
     %th Active?
     %th Max Clicks
     %th Clicks
-    %th Geolocation
-    %th Restriction
+    %th Max Impressions
+    %th Impressions
     %th
     %th
     %th
@@ -13,22 +13,26 @@
     %tr
       %td= advertisement.title
       %td= advertisement.is_active
-      %td= advertisement.max_clicks
+      %td
+        - if advertisement.max_clicks == 0 || advertisement.max_clicks == nil
+          Unlimited
+        - else
+          = advertisement.max_clicks
       %td
         - if advertisement.clicks == []
           None
         -else
           = advertisement.clicks
       %td
-        - if advertisement.geolocation_location == []
-          None
+        - if advertisement.max_impressions == 0 || advertisement.max_impressions == nil
+          Unlimited
         - else
-          = advertisement.geolocation_location
+          = advertisement.max_impressions
       %td
-        - if advertisement.param_restriction == []
+        - if advertisement.impressions_count == []
           None
-        - else
-          = advertisement.param_restriction
+        -else
+          = advertisement.impressions_count
       %td= link_to 'Show', advertisement
       %td= link_to 'Edit', edit_advertisement_path(advertisement)
       %td= link_to 'Destroy', advertisement, confirm: 'Are you sure?', method: :delete

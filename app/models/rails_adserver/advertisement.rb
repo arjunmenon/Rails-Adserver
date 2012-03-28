@@ -5,7 +5,8 @@ module RailsAdserver
     require 'carrierwave/orm/activerecord'
     
     attr_accessible :image, :title, :content, :width, :height, :is_active, :param_restriction, :ad_text, :parameter_restriction_boolean,
-    :param_restriction_name, :adspace_id, :ad_type, :url, :geolocation_boolean, :max_clicks, :geolocation_location, :city_name, :state_name, :country_name, :backup
+    :param_restriction_name, :adspace_id, :ad_type, :url, :geolocation_boolean, :max_clicks, :geolocation_location, :city_name, :state_name, :country_name, :backup,
+    :max_impressions
     
     validates :title, :presence => true
     validates :adspace_id, :presence => true

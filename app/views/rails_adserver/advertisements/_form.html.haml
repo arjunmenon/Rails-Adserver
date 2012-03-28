@@ -50,10 +50,15 @@
     .controls
       = f.text_field :url
   .control-group
-    = f.label :max_clicks, :class => "control-label", :id => "clicks"
+    = f.label :max_clicks, :class => "control-label"
     .controls
       = f.number_field :max_clicks
-      %p.help-block Use 0 for infinite clicks.
+      %p.help-block Use 0 or blank for infinite clicks.
+  .control-group
+    = f.label "Max Impressions", :class => "control-label"
+    .controls
+      = f.number_field :max_impressions
+      %p.help-block Use 0 or blank for infinite impressions.
   .control-group
     = f.label "Parameter Restriction?", :class => "control-label"
     .controls

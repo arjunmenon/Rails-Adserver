@@ -40,7 +40,18 @@ module RailsAdserver
           end
         end
       end
-      
+      if @advertisement
+        if @advertisement.impressions_count == nil
+          @advertisement.update_attribute(:impressions_count,0)
+        end
+        count = @advertisement.impressions_count+1
+        @advertisement.update_attribute(:impressions_count,count)
+        unless @advertisement.max_impressions == 0 || @advertisement.max_impressions == nil
+          if @advertisement.max_impressions <= @advertisement.impressions_count
+            @advertisement.update_attribute(:is_active,false)
+          end
+        end
+      end
       respond_to do |format|
         format.html {render :layout => false}
       end
@@ -57,7 +68,18 @@ module RailsAdserver
           @advertisement = RailsAdserver::Advertisement.find(id)
         end
       end
-      
+      if @advertisement
+        if @advertisement.impressions_count == nil
+          @advertisement.update_attribute(:impressions_count,0)
+        end
+        count = @advertisement.impressions_count+1
+        @advertisement.update_attribute(:impressions_count,count)
+        unless @advertisement.max_impressions == 0 || @advertisement.max_impressions == nil
+          if @advertisement.max_impressions <= @advertisement.impressions_count
+            @advertisement.update_attribute(:is_active,false)
+          end
+        end
+      end
       respond_to do |format|
         format.html {render :layout => false}
       end
