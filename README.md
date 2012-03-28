@@ -74,3 +74,5 @@ The Ad will now be rotated at:
   or
   website-url/mounted-root/ad/space/:adpace_id/param/:param
 ```
+
+You then can load the ad into your app with an iframe or javascript.
