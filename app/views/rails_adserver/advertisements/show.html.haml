@@ -1,3 +1,4 @@
+%h1= @advertisement.title
 - if @advertisement.ad_type == 'ad_service'
   = @advertisement.ad_text.html_safe
 - if @advertisement.ad_type == 'image_link'
