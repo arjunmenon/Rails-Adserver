@@ -4,7 +4,11 @@ module RailsAdserver
     require 'carrierwave'
     def ad_param
       id = RailsAdserver::Advertisement.ad_with_parameter(params[:adspace_id],params[:id],request.remote_ip)
-      @advertisement = RailsAdserver::Advertisement.find(id)
+      if id == nil
+        @advertisement = nil
+      else
+        @advertisement = RailsAdserver::Advertisement.find(id)
+      end
       respond_to do |format|
         format.html {render :partial => 'advertisement', :layout => false}
       end
@@ -12,7 +16,11 @@ module RailsAdserver
     
     def ad_space
       id = RailsAdserver::Advertisement.ad(params[:adspace_id],request.remote_ip)
-      @advertisement = RailsAdserver::Advertisement.find(id)
+      if id == nil
+        @advertisement = nil
+      else
+        @advertisement = RailsAdserver::Advertisement.find(id)
+      end
       respond_to do |format|
         format.html {render :partial => 'advertisement', :layout => false}
       end
@@ -71,6 +79,15 @@ module RailsAdserver
       @advertisement = Advertisement.new(params[:advertisement])
       geo = Geokit::Geocoders::MultiGeocoder.geocode(@advertisement.geolocation_location)
       @advertisement.update_attributes(:city_name => geo.city, :state_name => geo.state, :country_name => geo.country)
+      
+      if @advertisement.parameter_restriction_boolean == nil
+        @advertisement.update_attributes(:parameter_restriction_boolean => false)
+      end
+      
+      if @advertisement.geolocation_boolean == nil
+        @advertisement.update_attributes(:geolocation_boolean => false)
+      end
+      
       respond_to do |format|
         if @advertisement.save
           format.html { redirect_to @advertisement, notice: 'Advertisement was successfully created.' }

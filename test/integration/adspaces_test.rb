@@ -4,6 +4,7 @@ describe "Adspace integration" do
   before do
     User.destroy_all
     RailsAdserver::Adspace.destroy_all
+    RailsAdserver::Advertisement.destroy_all
     @user = FactoryGirl.create(:user)
   end
   it "Creates an Adspace" do
