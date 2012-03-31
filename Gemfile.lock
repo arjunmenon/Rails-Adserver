@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails_adserver (1.0.1)
+    rails_adserver (1.0.2)
       carrierwave
       coffee-script
       fog
