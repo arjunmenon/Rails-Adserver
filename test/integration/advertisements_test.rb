@@ -45,4 +45,21 @@ describe "Advertisements integration" do
     page.text.must_include "Text"
     RailsAdserver::Advertisement.find(:last).destroy
   end
+  it "should stop displaying ads after hitting max" do
+    login_as(@user, :scope => :user)
+    visit '/rails_adserver/'
+    click_link "New Advertisement"
+    fill_in 'advertisement_title', :with => "Foo Bar"
+    select(@adspace.name, :from => 'advertisement_adspace_id')
+    choose('advertisement_ad_type_ad_service')
+    fill_in "advertisement_max_impressions", :with => 1
+    fill_in 'advertisement_ad_text', :with => "Text"
+    check('advertisement_is_active')
+    click_button "Submit"
+    visit "/rails_adserver/ad/space/#{@adspace.id}"
+    page.text.must_include "Text"
+    visit "/rails_adserver/ad/space/#{@adspace.id}"
+    page.text.wont_include "Text"
+    RailsAdserver::Advertisement.find(:last).destroy
+  end
 end

@@ -1,14 +1,21 @@
+[Demo App](http://campus-bazar-adserver-demo.herokuapp.com)
+
 Setup:
 
 ```ruby
 rails new Adserver_App
-rake rails_adserver:install:migrations
 ```
 
 Gemfile:
 
 ```ruby
 gem 'rails_adserver'
+```
+
+Install the migrations
+
+```ruby
+rake rails_adserver:install:migrations
 ```
 
 Routes:
